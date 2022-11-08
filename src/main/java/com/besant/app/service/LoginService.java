@@ -5,13 +5,23 @@ import com.besant.app.repo.JdbcConnection;
 
 public class LoginService {
 
-	public boolean isValidUser(String userId, String password) {
+	public int isValidUser(String userId, String password) {
 		JdbcConnection con= new JdbcConnection();
 		User user=con.getUserValueFromUserId(userId);
 		if(user != null) {
-			return user.getPassword().equals(password);
+			
+			if( user.getPassword().equals(password))
+				//Success
+				return 0;
+			else
+				//Invalid Password
+				return 2;
+		}else {
+			// No User profile found
+			return 1;
 		}
 		
-		return false;
 	}
+	
+	
 }

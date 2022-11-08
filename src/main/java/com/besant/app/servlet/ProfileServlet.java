@@ -8,19 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.besant.app.service.LoginService;
+import com.besant.app.pojo.Profile;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class ProfileServlet
  */
-@WebServlet("/login")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/profile")
+public class ProfileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public ProfileServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,34 +29,19 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	 request.getRequestDispatcher("login.jsp").forward(request, response);
+		HttpSession session= request.getSession();
+		String userName=(String)session.getAttribute("userid");
+	Profile profile= new Profile(userName, "8870585555", "user@gmail.com");
+		request.setAttribute("profile", profile);
+		request.getRequestDispatcher("profile.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userName= request.getParameter("username");
-		String password= request.getParameter("password");
-		
-		LoginService service= new LoginService();
-		int responseCode= service.isValidUser(userName, password);
-		
-		if(responseCode == 0) {
-			HttpSession session= request.getSession();
-			session.setAttribute("userid",userName );
-			System.out.println("LOGIN SUCCESS");
-			// Always sendRedirect is a get request.
-			// request parameters
-			response.sendRedirect("profile");
-		}else {
-			System.out.println("LOGIN FAILURE");
-			response.sendRedirect("error");
-		}
-		
-		
-		
-		
+		// TODO Auto-generated method stub
+		//doGet(request, response);
 	}
 
 }

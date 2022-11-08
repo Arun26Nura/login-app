@@ -14,6 +14,7 @@ public class JdbcConnection {
 		User user= null;
 		try {
 		Class.forName("com.mysql.cj.jdbc.Driver");
+		System.out.println(userId);
 		
 		Connection con= DriverManager.getConnection("jdbc:mySql://localhost:3306/banking","root","Pass@123");
 		PreparedStatement ps= con.prepareStatement("select * from login_details where user_id=?");
@@ -33,4 +34,5 @@ public class JdbcConnection {
 		
 	}
 
+	
 }
